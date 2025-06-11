@@ -1,16 +1,23 @@
 "use client";
 import React from 'react';
 import {useResume} from "@/context/resume";
+import StepOne from "@/components/resume/step-one";
+import StepTwo from "@/components/resume/step-two";
+import StepThree from "@/components/resume/step-three";
+import StepFour from "@/components/resume/step-four";
+import StepFive from "@/components/resume/step-five";
 
 function ResumeCreatePage() {
 
-    const {resume} = useResume();
+    const {step, resume} = useResume();
 
     return (
-        <div>
-            <pre>
-                {JSON.stringify(resume, null, 4)}
-            </pre>
+        <div className="flex justify-center items-center h-screen">
+            {step === 1 && <StepOne resume={resume} /> }
+            {step === 2 && <StepTwo resume={resume} /> }
+            {step === 3 && <StepThree resume={resume} /> }
+            {step === 4 && <StepFour resume={resume} /> }
+            {step === 5 && <StepFive resume={resume} /> }
         </div>
     );
 }
