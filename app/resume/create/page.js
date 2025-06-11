@@ -6,13 +6,15 @@ import StepTwo from "@/components/resume/step-two";
 import StepThree from "@/components/resume/step-three";
 import StepFour from "@/components/resume/step-four";
 import StepFive from "@/components/resume/step-five";
+import ResumeCreateNav from "@/components/nav/resume-create-nav";
 
 function ResumeCreatePage() {
 
     const {step, resume} = useResume();
 
     return (
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col justify-center items-center h-screen">
+            <ResumeCreateNav />
             {step === 1 && <StepOne resume={resume} /> }
             {step === 2 && <StepTwo resume={resume} /> }
             {step === 3 && <StepThree resume={resume} /> }
