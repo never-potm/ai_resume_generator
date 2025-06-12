@@ -1,9 +1,9 @@
 import React from 'react';
+import db from '@/utils/db';
 
-function Dashboard() {
+export default async function Dashboard() {
+    await db();
     return (
         <div>Dashboard</div>
     );
 }
-
-export default Dashboard;
