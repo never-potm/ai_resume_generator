@@ -5,13 +5,14 @@ import {useResume} from "@/context/resume";
 
 function StepOne() {
 
-    const {resume, setResume} = useResume();
+    const {resume, setResume, saveResume} = useResume();
 
     const handleSubmit = (e) => {
         e.preventDefault(); // prevents default page reload on submit behavior of javascript
         console.log(resume);
 
         // save to database
+        saveResume();
 
         // goto next step
     }

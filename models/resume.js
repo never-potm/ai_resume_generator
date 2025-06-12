@@ -37,4 +37,5 @@ const ResumeSchema = new Schema(
     {timestamps: true}
 );
 
-export default Resume = mongoose.models.Resume || model("Resume", ResumeSchema);
+const Resume = mongoose.models.Resume || model("Resume", ResumeSchema);
+export default Resume;
