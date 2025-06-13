@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import {saveResumeToDB} from "@/actions/resume";
+import toast from 'react-hot-toast';
 
 const ResumeContext = React.createContext();
 const initialState = {
@@ -27,12 +28,13 @@ export function ResumeProvider({children}) {
     const saveResume = async () => {
         try {
             const data = await saveResumeToDB(resume);
-            alert("resume saved successfully.");
             setResume(data);
-            // setStep(2);
+            toast.success("🎉Resume saved successfully.");
+            setStep(2);
         } catch (e) {
             console.error(e);
             alert("failed to save resume")
+            toast.error("Failed to save resume.");
         }
     }
 
