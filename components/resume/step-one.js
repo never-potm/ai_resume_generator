@@ -19,46 +19,62 @@ function StepOne() {
         // goto next step
     }
 
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setResume((prevState) => {
+            // update previous state with existing data
+            const updatedResume = { ...prevState, [name]: value };
+            // save
+            localStorage.setItem('resume', JSON.stringify(updatedResume));
+            return updatedResume;
+        })
+    }
+
     return (
         <div className="w-full lg:w-1/2 p-5 shadow-lg border-t-4 rounded-lg">
             <h2 className="text-2xl font-bold mb-5">Personal Information</h2>
             <Input
+                name="name"
                 type="text"
                 className="mb-3"
-                onChange={e => setResume({...resume, name: e.target.value})}
+                onChange={handleChange}
                 value={resume.name}
                 placeholder="Name"
                 autoFocus
                 required
             />
             <Input
+                name="address"
                 type="text"
                 className="mb-3"
-                onChange={e => setResume({...resume, address: e.target.value})}
+                onChange={handleChange}
                 value={resume.address}
                 placeholder="Address"
                 required
             />
             <Input
+                name="phone"
                 type="number"
                 className="mb-3"
-                onChange={e => setResume({...resume, phone: e.target.value})}
+                onChange={handleChange}
                 value={resume.phone}
                 placeholder="Phone number"
                 required
             />
             <Input
+                name="email"
                 type="email"
                 className="mb-3"
-                onChange={e => setResume({...resume, email: e.target.value})}
+                onChange={handleChange}
                 value={resume.email}
                 placeholder="Email"
                 required
             />
             <Input
+                name="job"
                 type="text"
                 className="mb-3"
-                onChange={e => setResume({...resume, job: e.target.value})}
+                onChange={handleChange}
                 value={resume.job}
                 placeholder="Job title"
                 required

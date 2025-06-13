@@ -17,6 +17,13 @@ export function ResumeProvider({children}) {
     const [resume, setResume] = React.useState(initialState);
     const [step, setStep] = React.useState(1);
 
+    React.useEffect(() => {
+        const savedResume = localStorage.getItem("resume");
+        if (savedResume) {
+            setResume(JSON.parse(savedResume));
+        }
+    }, []);
+
     const saveResume = async () => {
         try {
             const data = await saveResumeToDB(resume);
