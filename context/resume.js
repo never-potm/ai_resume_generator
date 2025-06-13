@@ -1,8 +1,8 @@
 "use client";
 import React from 'react';
-import {saveResumeToDB, getUserResumesFromDb} from "@/actions/resume";
+import {saveResumeToDB, getUserResumesFromDb, getResumeFromDb} from "@/actions/resume";
 import toast from 'react-hot-toast';
-import {useRouter} from 'next/navigation';
+import {useRouter, useParams} from 'next/navigation';
 
 const ResumeContext = React.createContext();
 const initialState = {
@@ -20,6 +20,8 @@ export function ResumeProvider({children}) {
     const [retrievedResumes, setRetrievedResumes] = React.useState([]);
     const [step, setStep] = React.useState(1);
     const router = useRouter();
+    const {_id} = useParams();
+    console.log(_id);
 
     React.useEffect(() => {
         const savedResume = localStorage.getItem("resume");
@@ -32,10 +34,28 @@ export function ResumeProvider({children}) {
         getUserResumes();
     }, [])
 
+    React.useEffect(() => {
+
+        if(_id) {
+            getResume(_id);
+        }
+    }, [_id]);
+
+    const getResume = async () => {
+        try {
+            const data = await Resume.findById(_id);
+            setResume(data);
+        } catch (e) {
+            console.error(e);
+            toast.error("Failed to get resume");
+        }
+    }
+
     const saveResume = async () => {
         try {
             const data = await saveResumeToDB(resume);
             setResume(data);
+            localStorage.removeItem("resume");
             toast.success("🎉Resume saved successfully.");
             router.push(`/dashboard/resume/edit/${data._id}`);
             setStep(2);

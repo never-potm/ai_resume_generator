@@ -33,6 +33,7 @@ export const getUserResumesFromDb = async () => {
 
 export const getResumeFromDb = async (_id) => {
     try {
+        db();
         const resume = await Resume.findById(_id);
         return JSON.parse(JSON.stringify(resume));
     } catch (e) {
