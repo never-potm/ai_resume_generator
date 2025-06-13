@@ -28,6 +28,8 @@ const ResumeSchema = new Schema(
         name: String,
         job: String,
         address: String,
+        phone: String,
+        email: String,
         themeColor: String,
         summary: String,
         experience: [ExperienceSchema],
