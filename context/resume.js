@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import {saveResumeToDB, getUserResumesFromDb, getResumeFromDb} from "@/actions/resume";
+import {saveResumeToDB, getUserResumesFromDb, getResumeFromDb, updateResumeFromDb} from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams} from 'next/navigation';
 
@@ -73,6 +73,18 @@ export function ResumeProvider({children}) {
         } catch (err) {
             console.log(err);
             toast.error("Failed to get resumes.");
+        }
+    }
+
+    const updateResume = async () => {
+        try {
+            const data = await updateResumeFromDb(resume);
+            setResume(data);
+            toast.success("Resume saved successfully.");
+            setStep(3);
+        } catch (e) {
+            console.error(e);
+            toast.error("Failed to update resume.");
         }
     }
 
