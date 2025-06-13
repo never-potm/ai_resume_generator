@@ -30,3 +30,12 @@ export const getUserResumesFromDb = async () => {
         throw new Error(err);
     }
 }
+
+export const getResumeFromDb = async (_id) => {
+    try {
+        const resume = await Resume.findById(_id);
+        return JSON.parse(JSON.stringify(resume));
+    } catch (e) {
+        throw new Error(e);
+    }
+}

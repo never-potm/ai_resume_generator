@@ -15,6 +15,7 @@ function StepOneCreate() {
 
         // save to database
         saveResume();
+        localStorage.removeItem('resume');
 
         // goto next step
     }
