@@ -1,9 +1,12 @@
+"use client";
 import React from 'react';
-import db from '@/utils/db';
+import {useResume} from "@/context/resume";
 
-export default async function Dashboard() {
-    await db();
+export default function Dashboard() {
+    const {retrievedResumes} = useResume();
     return (
-        <div>Dashboard</div>
+        <div>
+            <pre>{JSON.stringify(retrievedResumes, null, 2)}</pre>
+        </div>
     );
 }

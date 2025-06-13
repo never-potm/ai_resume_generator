@@ -17,3 +17,16 @@ export const saveResumeToDB = async (data) => {
         throw new Error(e);
     }
 }
+
+export const getUserResumesFromDb = async () => {
+    try {
+        db();
+        const user = await currentUser();
+        const userEmail = user.emailAddresses[0]?.emailAddress;
+
+        const resumes = await Resume.find({userEmail});
+        return JSON.parse(JSON.stringify(resumes));
+    } catch (err) {
+        throw new Error(err);
+    }
+}
