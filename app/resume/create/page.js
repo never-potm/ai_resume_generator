@@ -2,6 +2,7 @@
 import React from 'react';
 import {useResume} from "@/context/resume";
 import StepOne from "@/components/resume/step-one";
+import StepOneCreate from "@/components/resume/step-one-create";
 import StepTwo from "@/components/resume/step-two";
 import StepThree from "@/components/resume/step-three";
 import StepFour from "@/components/resume/step-four";
@@ -15,7 +16,7 @@ function ResumeCreatePage() {
     return (
         <div className="flex flex-col justify-center items-center h-screen">
             <ResumeCreateNav />
-            {step === 1 && <StepOne resume={resume} /> }
+            {step === 1 && <StepOneCreate resume={resume} /> }
             {step === 2 && <StepTwo resume={resume} /> }
             {step === 3 && <StepThree resume={resume} /> }
             {step === 4 && <StepFour resume={resume} /> }

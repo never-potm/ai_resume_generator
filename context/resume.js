@@ -2,6 +2,7 @@
 import React from 'react';
 import {saveResumeToDB} from "@/actions/resume";
 import toast from 'react-hot-toast';
+import {useRouter} from 'next/navigation';
 
 const ResumeContext = React.createContext();
 const initialState = {
@@ -17,6 +18,7 @@ export function ResumeProvider({children}) {
 
     const [resume, setResume] = React.useState(initialState);
     const [step, setStep] = React.useState(1);
+    const router = useRouter();
 
     React.useEffect(() => {
         const savedResume = localStorage.getItem("resume");
@@ -31,6 +33,7 @@ export function ResumeProvider({children}) {
             setResume(data);
             toast.success("🎉Resume saved successfully.");
             setStep(2);
+            router.push(`/dashboard/resume/edit/${data._id}`);
         } catch (e) {
             console.error(e);
             alert("failed to save resume")
