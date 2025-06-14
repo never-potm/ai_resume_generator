@@ -3,6 +3,7 @@
 import db from '@/utils/db';
 import Resume from '@/models/resume';
 import {currentUser} from '@clerk/nextjs/server';
+import mongoose from "mongoose";
 
 
 const checkOwnership = async (resumeId) => {
@@ -13,7 +14,7 @@ const checkOwnership = async (resumeId) => {
             throw new Error("User not found")
         }
 
-        const resume = await Resume.findOne(resumeId);
+        const resume = await Resume.findOne({_id: resumeId});
         if (!resume) {
             throw new Error("Resume not found");
         }
@@ -69,9 +70,13 @@ export const updateResumeFromDb = async (data) => {
         db();
         const {_id, ...rest} = data;
 
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            throw new Error("Invalid MongoDB ID");
+        }
+
         await checkOwnership(_id);
 
-        const resume = await Resume.findByIdAndUpdate(_id, {...rest}, {new: true});
+        const resume = await Resume.findByIdAndUpdate(new mongoose.Types.ObjectId(_id), {...rest}, {new: true});
         return JSON.parse(JSON.stringify(resume));
     } catch (e) {
         throw new Error(e);

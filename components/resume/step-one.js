@@ -6,17 +6,17 @@ import {useUser, SignInButton} from '@clerk/nextjs';
 
 function StepOne() {
 
-    const {resume, setResume, saveResume} = useResume();
+    const {resume, setResume, updateResume, setStep} = useResume();
     const {isSignedIn} = useUser();
 
     const handleSubmit = (e) => {
         e.preventDefault(); // prevents default page reload on submit behavior of javascript
         console.log(resume);
 
-        // save to database
-        saveResume();
+        // update resume
+        updateResume();
 
-        // goto next step
+        setStep(2);
     }
 
     const handleChange = (e) => {

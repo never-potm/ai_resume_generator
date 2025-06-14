@@ -8,7 +8,7 @@ import StepFour from "@/components/resume/step-four";
 import StepFive from "@/components/resume/step-five";
 import ResumeCreateNav from "@/components/nav/resume-create-nav";
 
-function ResumeUpdatePage() {
+export default function ResumeUpdatePage() {
 
     const {step, resume} = useResume();
 
@@ -23,5 +23,3 @@ function ResumeUpdatePage() {
         </div>
     );
 }
-
-export default ResumeUpdatePage;

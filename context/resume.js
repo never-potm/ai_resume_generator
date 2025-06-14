@@ -21,7 +21,6 @@ export function ResumeProvider({children}) {
     const [step, setStep] = React.useState(1);
     const router = useRouter();
     const {_id} = useParams();
-    console.log(_id);
 
     React.useEffect(() => {
         const savedResume = localStorage.getItem("resume");
@@ -36,14 +35,14 @@ export function ResumeProvider({children}) {
 
     React.useEffect(() => {
 
-        if(_id) {
+        if (_id) {
             getResume(_id);
         }
     }, [_id]);
 
     const getResume = async () => {
         try {
-            const data = await Resume.findById(_id);
+            const data = await getResumeFromDb(_id);
             setResume(data);
         } catch (e) {
             console.error(e);
@@ -81,7 +80,6 @@ export function ResumeProvider({children}) {
             const data = await updateResumeFromDb(resume);
             setResume(data);
             toast.success("Resume saved successfully.");
-            setStep(3);
         } catch (e) {
             console.error(e);
             toast.error("Failed to update resume.");
@@ -89,7 +87,15 @@ export function ResumeProvider({children}) {
     }
 
     return <ResumeContext.Provider
-        value={{step, setStep, resume, setResume, saveResume, retrievedResumes}}
+        value={{
+            step,
+            setStep,
+            resume,
+            setResume,
+            saveResume,
+            retrievedResumes,
+            updateResume
+        }}
     >
         {children}
     </ResumeContext.Provider>;
