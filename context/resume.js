@@ -2,7 +2,7 @@
 import React from 'react';
 import {saveResumeToDB, getUserResumesFromDb, getResumeFromDb, updateResumeFromDb} from "@/actions/resume";
 import toast from 'react-hot-toast';
-import {useRouter, useParams} from 'next/navigation';
+import {useRouter, useParams, usePathname} from 'next/navigation';
 
 const ResumeContext = React.createContext();
 const initialState = {
@@ -21,6 +21,14 @@ export function ResumeProvider({children}) {
     const [step, setStep] = React.useState(1);
     const router = useRouter();
     const {_id} = useParams();
+    const pathname = usePathname();
+
+    React.useEffect(() => {
+        if (pathname?.includes("/resume/create")) {
+            setResume(initialState);
+            setStep(1);
+        }
+    }, [pathname])
 
     React.useEffect(() => {
         const savedResume = localStorage.getItem("resume");
