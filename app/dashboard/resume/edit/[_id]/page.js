@@ -7,19 +7,25 @@ import StepThree from "@/components/resume/step-three";
 import StepFour from "@/components/resume/step-four";
 import StepFive from "@/components/resume/step-five";
 import ResumeCreateNav from "@/components/nav/resume-create-nav";
+import PreviewCard from "@/components/cards/preview-card";
 
 export default function ResumeUpdatePage() {
 
     const {step, resume} = useResume();
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen">
-            <ResumeCreateNav />
-            {step === 1 && <StepOne resume={resume} /> }
-            {step === 2 && <StepTwo resume={resume} /> }
-            {step === 3 && <StepThree resume={resume} /> }
-            {step === 4 && <StepFour resume={resume} /> }
-            {step === 5 && <StepFive resume={resume} /> }
+        <div className="flex flex-col lg:flex-row h-screen overflow-y-auto">
+            <div className="flex flex-col lg:w-1/2 p-4 lg:order-last lg:flex lg:justify-center lg:items-center">
+                <PreviewCard/>
+            </div>
+            <div className="flex flex-col lg:w-1/2 p-4 lg:order-first lg:flex lg:justify-center lg:items-center">
+                <ResumeCreateNav />
+                {step === 1 && <StepOne/> }
+                {step === 2 && <StepTwo/> }
+                {step === 3 && <StepThree/> }
+                {step === 4 && <StepFour/> }
+                {step === 5 && <StepFive/> }
+            </div>
         </div>
     );
 }

@@ -13,7 +13,7 @@ function StepTwo() {
     }
 
     return (
-        <div className="w-full md:w-1/2 p-5 shadow-lg border-t-4 rounded-lg">
+        <div className="w-full p-5 shadow-lg border-t-4 rounded-lg">
             <h2 className="text-2xl font-bold m-5">Summary</h2>
 
             <Textarea
