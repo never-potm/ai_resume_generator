@@ -8,10 +8,7 @@ export default async function db() {
             return;
         }
 
-        console.log("connecting to mongodb...");
-        console.log(process.env.DATABASE);
         await mongoose.connect(process.env.DATABASE);
-        console.log('Connected to mongo db!');
 
         if (process.env.NODE_ENV !== 'production') {
             process.on('SIGINT', async () => {

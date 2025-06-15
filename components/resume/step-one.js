@@ -11,7 +11,6 @@ function StepOne() {
 
     const handleSubmit = (e) => {
         e.preventDefault(); // prevents default page reload on submit behavior of javascript
-        console.log(resume);
 
         // update resume
         updateResume();

@@ -3,6 +3,9 @@ import {Textarea} from "@/components/ui/textarea";
 import {useResume} from "@/context/resume";
 import {Button} from "@/components/ui/button";
 import {Brain, Loader2} from "lucide-react";
+import toast from "react-hot-toast";
+import {callAIAPI} from "@/lib/utils";
+import {callGeminiAPI} from "@/lib/gemini";
 
 function StepTwo() {
     // context
@@ -16,8 +19,17 @@ function StepTwo() {
         setStep(3);
     }
 
-    const handleGenerateWithAI = () => {
-        alert("calling AI to generate content")
+    const handleGenerateWithAI = async () => {
+        setLoading(true);
+        if (!resume.job) {
+            toast.error("Please fill in your personal detail or write something about yourself.")
+            setLoading(false);
+            return;
+        }
+
+        const response = await callGeminiAPI(`Generate a resume summary for a person with the following details: ${JSON.stringify(resume)} in plain text format`);
+        setResume({...resume, summary: response});
+        setLoading(false);
     }
 
     return (
