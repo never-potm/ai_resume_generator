@@ -4,8 +4,11 @@ import {useResume} from "@/context/resume";
 import {Button} from "@/components/ui/button";
 import {Brain, Loader2} from "lucide-react";
 import toast from "react-hot-toast";
-import {callAIAPI} from "@/lib/utils";
 import {callGeminiAPI} from "@/lib/gemini";
+import dynamic from "next/dynamic";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), {ssr: false});
+import "react-quill-new/dist/quill.snow.css";
 
 function StepTwo() {
     // context
@@ -50,16 +53,22 @@ function StepTwo() {
 
             </div>
 
-            <Textarea
-                onChange={e => setResume({...resume, summary: e.target.value})}
+            {/*<Textarea*/}
+            {/*    onChange={e => setResume({...resume, summary: e.target.value})}*/}
+            {/*    value={resume.summary}*/}
+            {/*    className="mb-3"*/}
+            {/*    placeholder="Write something about yourself"*/}
+            {/*    rows="10"*/}
+            {/*    required*/}
+            {/*/>*/}
+
+            <ReactQuill
+                theme="snow"
+                onChange={e => setResume({...resume, summary: e})}
                 value={resume.summary}
-                className="mb-3"
-                placeholder="Write something about yourself"
-                rows="10"
-                required
             />
 
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-3">
                 <Button onClick={handleSubmit}>Next</Button>
             </div>
         </div>
