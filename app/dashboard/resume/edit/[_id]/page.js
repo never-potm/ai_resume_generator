@@ -11,7 +11,7 @@ import PreviewCard from "@/components/cards/preview-card";
 
 export default function ResumeUpdatePage() {
 
-    const {step, resume} = useResume();
+    const {step} = useResume();
 
     return (
         <div className="flex flex-col lg:flex-row h-screen overflow-y-auto">
