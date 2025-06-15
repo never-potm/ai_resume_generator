@@ -1,10 +1,20 @@
 "use client";
-import React from 'react';
+import React, {useEffect} from 'react';
 import {saveResumeToDB, getUserResumesFromDb, getResumeFromDb, updateResumeFromDb} from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams, usePathname} from 'next/navigation';
 
 const ResumeContext = React.createContext();
+
+const experienceField = {
+    title: '',
+    company: '',
+    address: '',
+    startDate: '',
+    endDate: '',
+    summary: ''
+}
+
 const initialState = {
     name: "",
     job: "",
@@ -12,6 +22,7 @@ const initialState = {
     phone: "",
     email: "",
     themeColor: "",
+    experience: []
 };
 
 export function ResumeProvider({children}) {
@@ -19,6 +30,10 @@ export function ResumeProvider({children}) {
     const [resume, setResume] = React.useState(initialState);
     const [retrievedResumes, setRetrievedResumes] = React.useState([]);
     const [step, setStep] = React.useState(1);
+
+    const [experienceList, setExperienceList] = React.useState([experienceField]);
+    const [experienceLoading, setExperienceLoading] = React.useState(false);
+
     const router = useRouter();
     const {_id} = useParams();
     const pathname = usePathname();
@@ -94,6 +109,36 @@ export function ResumeProvider({children}) {
         }
     }
 
+    useEffect(() => {
+        if (resume.experience) {
+            setExperienceList(resume.experience);
+        }
+    }, [resume]);
+
+    const handleExperienceChange = (e, index) => {
+
+    };
+
+    const handleExperienceQuillChange = (value, index) => {
+
+    };
+
+    const handleExperienceSubmit = () => {
+
+    };
+
+    const addExperience = () => {
+
+    };
+
+    const removeExperience = () => {
+
+    };
+
+    const handleExperienceGenerateWithAI = async () => {
+
+    };
+
     return <ResumeContext.Provider
         value={{
             step,
@@ -102,7 +147,14 @@ export function ResumeProvider({children}) {
             setResume,
             saveResume,
             retrievedResumes,
-            updateResume
+            updateResume,
+            experienceList,
+            handleExperienceChange,
+            handleExperienceQuillChange,
+            handleExperienceSubmit,
+            addExperience,
+            removeExperience,
+            handleExperienceGenerateWithAI,
         }}
     >
         {children}
