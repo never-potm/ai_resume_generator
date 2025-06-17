@@ -34,6 +34,52 @@ function StepThree(props) {
                             value={experience.title}
                             className="mb-3"
                         />
+                        <Input
+                            name="address"
+                            type="text"
+                            placeholder="Company Address"
+                            onChange={e => handleExperienceChange(e, index)}
+                            value={experience.address}
+                            className="mb-3"
+                        />
+                        <Input
+                            name="startDate"
+                            type="text"
+                            placeholder="Start date"
+                            onChange={e => handleExperienceChange(e, index)}
+                            value={experience.startDate}
+                            className="mb-3"
+                        />
+                        <Input
+                            name="endDate"
+                            type="text"
+                            placeholder="End date"
+                            onChange={e => handleExperienceChange(e, index)}
+                            value={experience.endDate}
+                            className="mb-3"
+                        />
+                        <ReactQuill
+                            theme="snow"
+                            onChange={value => handleExperienceQuillChange(value, index)}
+                            value={experience.summary}
+                            className="mb-2"
+                            placeholder="Job summary"
+                        />
+
+                        <div className="flex justify-end">
+                            <Button
+                                variant="destructive"
+                                onClick={() => handleExperienceGenerateWithAI(index)}
+                                disabled={experienceLoading[index]}
+                            >
+                                {experienceLoading[index] ? (
+                                    <Loader2Icon size={18} className="mr-2"/>
+                                ) : (
+                                    <Brain size={18} className="mr-2"/>
+                                )}
+                                Generate With AI
+                            </Button>
+                        </div>
                     </div>
                 ))}
 

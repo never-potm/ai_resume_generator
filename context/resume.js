@@ -32,7 +32,7 @@ export function ResumeProvider({children}) {
     const [step, setStep] = React.useState(1);
 
     const [experienceList, setExperienceList] = React.useState([experienceField]);
-    const [experienceLoading, setExperienceLoading] = React.useState(false);
+    const [experienceLoading, setExperienceLoading] = React.useState({});
 
     const router = useRouter();
     const {_id} = useParams();
@@ -155,6 +155,7 @@ export function ResumeProvider({children}) {
             resume,
             setResume,
             saveResume,
+            experienceLoading,
             retrievedResumes,
             updateResume,
             experienceList,
