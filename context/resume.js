@@ -109,7 +109,7 @@ export function ResumeProvider({children}) {
         }
     }
 
-    useEffect(() => {
+    React.useEffect(() => {
         if (resume.experience) {
             setExperienceList(resume.experience);
         }
@@ -128,11 +128,20 @@ export function ResumeProvider({children}) {
     };
 
     const addExperience = () => {
-
+        const newExperience = {
+            ...experienceField,
+        }
+        setExperienceList([...experienceList, newExperience]);
     };
 
     const removeExperience = () => {
+        if (experienceList.length === 1) {
+            return;
+        }
 
+        // create copy of experienceList except the last experience list item
+        const newEntries = experienceList.slice(0,experienceList.length-1);
+        setExperienceList(newEntries);
     };
 
     const handleExperienceGenerateWithAI = async () => {
