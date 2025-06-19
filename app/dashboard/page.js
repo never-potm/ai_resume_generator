@@ -6,7 +6,6 @@ import ResumeCard from "@/components/cards/resume-card";
 
 export default function Dashboard() {
     const {retrievedResumes} = useResume();
-    console.log(retrievedResumes);
 
     if (!retrievedResumes?.length) {
         return (
