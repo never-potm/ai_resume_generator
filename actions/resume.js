@@ -30,7 +30,7 @@ const checkOwnership = async (resumeId) => {
 
 export const saveResumeToDB = async (data) => {
     try {
-        db()
+        await db()
         const user = await currentUser();
         const userEmail = user.emailAddresses[0]?.emailAddress;
 
@@ -44,7 +44,7 @@ export const saveResumeToDB = async (data) => {
 
 export const getUserResumesFromDb = async () => {
     try {
-        db();
+        await db();
         const user = await currentUser();
         const userEmail = user.emailAddresses[0]?.emailAddress;
 
@@ -57,7 +57,7 @@ export const getUserResumesFromDb = async () => {
 
 export const getResumeFromDb = async (_id) => {
     try {
-        db();
+        await db();
         const resume = await Resume.findById(_id);
         return JSON.parse(JSON.stringify(resume));
     } catch (e) {
@@ -67,7 +67,7 @@ export const getResumeFromDb = async (_id) => {
 
 export const updateResumeFromDb = async (data) => {
     try {
-        db();
+        await db();
         const {_id, ...rest} = data;
 
         if (!mongoose.Types.ObjectId.isValid(_id)) {
@@ -77,6 +77,18 @@ export const updateResumeFromDb = async (data) => {
         await checkOwnership(_id);
 
         const resume = await Resume.findByIdAndUpdate(new mongoose.Types.ObjectId(_id), {...rest}, {new: true});
+        return JSON.parse(JSON.stringify(resume));
+    } catch (e) {
+        throw new Error(e);
+    }
+}
+
+export const updateExperienceToDb = async (data) => {
+    try {
+        await db();
+        const {_id, experience} = data;
+        await checkOwnership(_id);
+        const resume = await Resume.findByIdAndUpdate(_id, {experience}, {new: true});
         return JSON.parse(JSON.stringify(resume));
     } catch (e) {
         throw new Error(e);

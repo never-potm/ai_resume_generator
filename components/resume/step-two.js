@@ -30,7 +30,7 @@ function StepTwo() {
             return;
         }
 
-        const response = await callGeminiAPI(`Generate a resume summary for a person with the following details: ${JSON.stringify(resume)} in plain text format`);
+        const response = await callGeminiAPI(`Generate a resume summary for a person with the following details: ${resume.summary} in plain text format`);
         setResume({...resume, summary: response});
         setLoading(false);
     }

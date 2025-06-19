@@ -1,24 +1,20 @@
 import mongoose from 'mongoose';
 
+let cached = global.mongoose;
+
+if (!cached) {
+    cached = global.mongoose = { conn: null, promise: null };
+}
+
 export default async function db() {
-    try {
+    if (cached.conn) return cached.conn;
 
-        if (mongoose.connection.readyState >= 1) {
-            console.log("a database connection is already ready")
-            return;
-        }
-
-        await mongoose.connect(process.env.DATABASE);
-
-        if (process.env.NODE_ENV !== 'production') {
-            process.on('SIGINT', async () => {
-                console.log('SIGINT received. Closing MongoDB connection...');
-                await mongoose.connection.close();
-                process.exit(0);
-            });
-        }
-
-    } catch (error) {
-        console.log(error);
+    if (!cached.promise) {
+        cached.promise = mongoose.connect(process.env.DATABASE, {
+            bufferCommands: false,
+        }).then((mongoose) => mongoose);
     }
+
+    cached.conn = await cached.promise;
+    return cached.conn;
 }

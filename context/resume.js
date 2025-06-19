@@ -1,6 +1,12 @@
 "use client";
 import React, {useEffect} from 'react';
-import {saveResumeToDB, getUserResumesFromDb, getResumeFromDb, updateResumeFromDb} from "@/actions/resume";
+import {
+    saveResumeToDB,
+    getUserResumesFromDb,
+    getResumeFromDb,
+    updateResumeFromDb,
+    updateExperienceToDb
+} from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams, usePathname} from 'next/navigation';
 
@@ -109,6 +115,17 @@ export function ResumeProvider({children}) {
         }
     }
 
+    const updateExperience = async (experienceList) => {
+        try {
+            const data = await updateExperienceToDb({...resume, experience: experienceList});
+            setResume(data);
+            toast.success("Experience saved successfully.");
+        } catch (e) {
+            console.error(e);
+            toast.error("Failed to update experience.");
+        }
+    }
+
     React.useEffect(() => {
         if (resume.experience) {
             setExperienceList(resume.experience);
@@ -116,15 +133,21 @@ export function ResumeProvider({children}) {
     }, [resume]);
 
     const handleExperienceChange = (e, index) => {
-
+        const newEntries = [...experienceList];
+        const {name, value} = e.target;
+        newEntries[index][name] = value;
+        setExperienceList(newEntries);
     };
 
     const handleExperienceQuillChange = (value, index) => {
-
+        const newEntries = [...experienceList];
+        newEntries[index].summary = value;
+        setExperienceList(newEntries);
     };
 
     const handleExperienceSubmit = () => {
-
+        updateExperience(experienceList);
+        // setStep(4);
     };
 
     const addExperience = () => {
@@ -140,7 +163,7 @@ export function ResumeProvider({children}) {
         }
 
         // create copy of experienceList except the last experience list item
-        const newEntries = experienceList.slice(0,experienceList.length-1);
+        const newEntries = experienceList.slice(0, experienceList.length - 1);
         setExperienceList(newEntries);
     };
 
