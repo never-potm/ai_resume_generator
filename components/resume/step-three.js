@@ -97,7 +97,7 @@ function StepThree(props) {
                     <Plus size={18} className="mr-2"/>Add
                 </Button>
 
-                {experienceList?.length > 0 && (
+                {experienceList?.length > 1 && (
                     <Button variant="outline" onClick={removeExperience}>
                         <X size={18} className="mr-2"/>Remove
                     </Button>

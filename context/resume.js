@@ -49,7 +49,7 @@ export function ResumeProvider({children}) {
     const [experienceList, setExperienceList] = React.useState([experienceField]);
     const [experienceLoading, setExperienceLoading] = React.useState({});
 
-    const [educationList, setEducationList] = React.useState([]);
+    const [educationList, setEducationList] = React.useState([educationField]);
 
     const router = useRouter();
     const {_id} = useParams();
@@ -158,7 +158,7 @@ export function ResumeProvider({children}) {
 
     const handleExperienceSubmit = () => {
         updateExperience(experienceList);
-        // setStep(4);
+        setStep(4);
     };
 
     const addExperience = () => {
@@ -259,7 +259,7 @@ export function ResumeProvider({children}) {
         const newEntries = educationList.slice(0, educationList.length - 1);
         setEducationList(newEntries);
 
-        updateEducation(educationList);
+        updateEducation(newEntries);
     }
 
     return <ResumeContext.Provider
