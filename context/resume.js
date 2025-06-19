@@ -9,6 +9,7 @@ import {
 } from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams, usePathname} from 'next/navigation';
+import {callGeminiAPI} from "@/lib/gemini";
 
 const ResumeContext = React.createContext();
 
@@ -167,7 +168,30 @@ export function ResumeProvider({children}) {
         setExperienceList(newEntries);
     };
 
-    const handleExperienceGenerateWithAI = async () => {
+    const handleExperienceGenerateWithAI = async (index) => {
+        setExperienceLoading((prevState) => ({...prevState, [index]: true}));
+
+        const selectedExperience = experienceList[index];
+        if (!selectedExperience || !selectedExperience.title) {
+            toast.error("Please enter job title for the selected experience entry.");
+            setExperienceLoading((prevState) => ({...prevState, [index]: false}));
+            return;
+        }
+
+        const jobTitle = selectedExperience.title;
+        const jobSummary = selectedExperience.summary || "";
+
+        try {
+            const response = await callGeminiAPI(`Generate a list of duties and responsibilities in HTML bullet points for the job title ${jobTitle} ${jobSummary}, not in markdown format or code blocks`);
+            const updatedExperienceList = experienceList.slice();
+            updatedExperienceList[index] = {...selectedExperience, summary: response}
+            setResume((prevState) => ({...prevState, experience: updatedExperienceList}));
+        } catch (e) {
+            console.error(e);
+            toast.error("failed to generate job description.")
+        } finally {
+            setExperienceLoading((prevState) => ({...prevState, [index]: false}));
+        }
 
     };
 

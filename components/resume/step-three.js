@@ -82,7 +82,7 @@ function StepThree(props) {
                                 disabled={experienceLoading[index]}
                             >
                                 {experienceLoading[index] ? (
-                                    <Loader2Icon size={18} className="mr-2"/>
+                                    <Loader2Icon size={18} className="mr-2 animate-spin" />
                                 ) : (
                                     <Brain size={18} className="mr-2"/>
                                 )}
