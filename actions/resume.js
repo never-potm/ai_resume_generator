@@ -94,3 +94,15 @@ export const updateExperienceToDb = async (data) => {
         throw new Error(e);
     }
 }
+
+export const updateEducationToDb = async (data) => {
+    try {
+        await db();
+        const {_id, education} = data;
+        await checkOwnership(_id);
+        const resume = await Resume.findByIdAndUpdate(_id, {education}, {new: true});
+        return JSON.parse(JSON.stringify(resume));
+    } catch (e) {
+        throw new Error(e);
+    }
+}

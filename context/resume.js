@@ -5,7 +5,7 @@ import {
     getUserResumesFromDb,
     getResumeFromDb,
     updateResumeFromDb,
-    updateExperienceToDb
+    updateExperienceToDb, updateEducationToDb
 } from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams, usePathname} from 'next/navigation';
@@ -216,7 +216,17 @@ export function ResumeProvider({children}) {
     }, [resume]);
 
     const updateEducation = async (educationList) => {
-
+        try {
+            const data = await updateEducationToDb({
+                ...resume,
+                education: educationList,
+            });
+            setResume(data);
+            toast.success("Education details saved successfully.");
+        } catch (e) {
+            console.log(e);
+            toast.error("Failed to update education entry.");
+        }
     };
 
     const handleEducationChange = (e, index) => {
