@@ -1,5 +1,6 @@
 import PersonalDetails from "@/components/preview/personal-detail";
 import Summary from "@/components/preview/summary";
+import Experience from "@/components/preview/experience";
 import {useResume} from "@/context/resume";
 
 export default function PreviewCard() {
@@ -11,6 +12,7 @@ export default function PreviewCard() {
              style={{borderColor: resume?.themeColor}}>
             <PersonalDetails resume={resume}/>
             <Summary resume={resume}/>
+            <Experience resume={resume}/>
         </div>
     )
 }
