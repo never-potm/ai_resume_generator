@@ -247,7 +247,7 @@ export function ResumeProvider({children}) {
 
     const handleEducationSubmit = () => {
         updateEducation(educationList);
-        // setStep(5);
+        setStep(5);
     }
 
     const addEducation = () => {
@@ -297,6 +297,36 @@ export function ResumeProvider({children}) {
         }
     }
 
+    const handleSkillsChange = (e, index) => {
+        const newEntries = [...skillsList];
+        const {name, value} = e.target;
+        newEntries[index][name] = value;
+        setSkillsList(newEntries);
+    }
+
+    const handleSkillsSubmit = () => {
+        updateSkills(skillsList);
+        // router.push(`/dashboard/resume/download/${resume._id}`)
+    }
+
+    const addSkill = () => {
+        const newSkill = {...skillField}
+        setSkillsList([...skillsList, newSkill]);
+        setResume((prevState) => ({
+            ...prevState,
+            skills: [...prevState.skills, newSkill]
+        }));
+    }
+
+    const removeSkill = () => {
+        if(skillsList.length === 1) {
+            return;
+        }
+        const newEntries = skillsList.slice(0, skillsList.length - 1);
+        setSkillsList(newEntries);
+        updateSkills(newEntries);
+    }
+
     return <ResumeContext.Provider
         value={{
             step,
@@ -319,7 +349,11 @@ export function ResumeProvider({children}) {
             handleEducationChange,
             addEducation,
             removeEducation,
-            updateSkills
+            skillsList,
+            handleSkillsChange,
+            handleSkillsSubmit,
+            addSkill,
+            removeSkill,
         }}
     >
         {children}
