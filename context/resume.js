@@ -5,7 +5,9 @@ import {
     getUserResumesFromDb,
     getResumeFromDb,
     updateResumeFromDb,
-    updateExperienceToDb, updateEducationToDb
+    updateExperienceToDb,
+    updateEducationToDb,
+    updateSkillsToDb
 } from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams, usePathname} from 'next/navigation';
@@ -29,6 +31,11 @@ const educationField = {
     year: "",
 };
 
+const skillField = {
+    name: "",
+    level: "",
+}
+
 const initialState = {
     name: "",
     job: "",
@@ -38,6 +45,7 @@ const initialState = {
     themeColor: "",
     experience: [experienceField],
     education: [educationField],
+    skills: [skillField]
 };
 
 export function ResumeProvider({children}) {
@@ -50,6 +58,7 @@ export function ResumeProvider({children}) {
     const [experienceLoading, setExperienceLoading] = React.useState({});
 
     const [educationList, setEducationList] = React.useState([educationField]);
+    const [skillsList, setSkillsList] = React.useState([skillField]);
 
     const router = useRouter();
     const {_id} = useParams();
@@ -262,6 +271,32 @@ export function ResumeProvider({children}) {
         updateEducation(newEntries);
     }
 
+    React.useEffect(() => {
+        if(resume.skills) {
+            setSkillsList()
+        }
+    }, [resume]);
+
+    const updateSkills = async (skillsList) => {
+        const invalidSkills = skillsList.filter((skill) => !skill.name || !skill.label)
+        if(invalidSkills.length > 0) {
+            toast.error("Please fill in both skill name and level");
+            return;
+        }
+
+        try {
+            const data = await updateSkillsToDb({
+                ...resume,
+                skills: skillsList
+            })
+            setResume(data);
+            toast.success("Skills updated.")
+        } catch (e) {
+            console.log(e);
+            toast.error("Failed to update skills");
+        }
+    }
+
     return <ResumeContext.Provider
         value={{
             step,
@@ -283,7 +318,8 @@ export function ResumeProvider({children}) {
             handleEducationSubmit,
             handleEducationChange,
             addEducation,
-            removeEducation
+            removeEducation,
+            updateSkills
         }}
     >
         {children}
