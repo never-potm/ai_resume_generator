@@ -22,6 +22,13 @@ const experienceField = {
     summary: ''
 }
 
+const educationField = {
+    name: "",
+    address: "",
+    qualification: "",
+    year: "",
+};
+
 const initialState = {
     name: "",
     job: "",
@@ -29,7 +36,8 @@ const initialState = {
     phone: "",
     email: "",
     themeColor: "",
-    experience: []
+    experience: [experienceField],
+    education: [educationField],
 };
 
 export function ResumeProvider({children}) {
@@ -40,6 +48,8 @@ export function ResumeProvider({children}) {
 
     const [experienceList, setExperienceList] = React.useState([experienceField]);
     const [experienceLoading, setExperienceLoading] = React.useState({});
+
+    const [educationList, setEducationList] = React.useState([]);
 
     const router = useRouter();
     const {_id} = useParams();
@@ -156,6 +166,10 @@ export function ResumeProvider({children}) {
             ...experienceField,
         }
         setExperienceList([...experienceList, newExperience]);
+        setResume((prevState) => ({
+            ...prevState,
+            experience: [...experienceList, newExperience],
+        }))
     };
 
     const removeExperience = () => {
@@ -195,6 +209,49 @@ export function ResumeProvider({children}) {
 
     };
 
+    React.useEffect(() => {
+        if(resume.education) {
+            setEducationList(resume.education);
+        }
+    }, [resume]);
+
+    const updateEducation = async (educationList) => {
+
+    };
+
+    const handleEducationChange = (e, index) => {
+        const newEntries = [...educationList];
+        const {name, value} = e.target;
+        newEntries[index][name] = value;
+        setEducationList(newEntries);
+    };
+
+    const handleEducationSubmit = () => {
+        updateEducation(educationList);
+        // setStep(5);
+    }
+
+    const addEducation = () => {
+        const newEducation = {
+            ...educationField,
+        }
+        setEducationList([...educationList, newEducation]);
+        setResume((prevState) => ({
+            ...prevState,
+            education: [...educationList, newEducation],
+        }))
+    };
+
+    const removeEducation = () => {
+        if (educationList.length === 1) {
+            return;
+        }
+        const newEntries = educationList.slice(0, educationList.length - 1);
+        setEducationList(newEntries);
+
+        updateEducation(educationList);
+    }
+
     return <ResumeContext.Provider
         value={{
             step,
@@ -212,6 +269,11 @@ export function ResumeProvider({children}) {
             addExperience,
             removeExperience,
             handleExperienceGenerateWithAI,
+            educationList,
+            handleEducationSubmit,
+            handleEducationChange,
+            addEducation,
+            removeEducation
         }}
     >
         {children}
