@@ -8,7 +8,7 @@ function Experience({resume}) {
     return (
         <div className="my-6">
             <h2
-                className="text-center font-bold text-sm mb-2"
+                className="font-bold text-sm mb-2"
                 style={{color: resume.themeColor}}>
                 Professional experience
             </h2>

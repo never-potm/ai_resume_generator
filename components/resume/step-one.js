@@ -82,7 +82,7 @@ function StepOne() {
 
             <HexColorPicker
                 color={resume.themeColor}
-                onChange={color => setResume({...resume, themeColor: color})}
+                onChange={(color) => setResume({...resume, themeColor: color})}
             />
 
             <div className="flex justify-end">

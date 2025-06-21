@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {Textarea} from "@/components/ui/textarea";
 import {useResume} from "@/context/resume";
 import {Button} from "@/components/ui/button";
 import {Brain, Loader2} from "lucide-react";
