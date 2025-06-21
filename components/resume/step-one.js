@@ -3,6 +3,7 @@ import {Button} from '@/components/ui/button';
 import {Input} from '@/components/ui/input';
 import {useResume} from "@/context/resume";
 import {useUser, SignInButton} from '@clerk/nextjs';
+import {HexColorPicker} from 'react-colorful';
 
 function StepOne() {
 
@@ -77,6 +78,11 @@ function StepOne() {
                 value={resume.job}
                 placeholder="Job title"
                 required
+            />
+
+            <HexColorPicker
+                color={resume.themeColor}
+                onChange={color => setResume({...resume, themeColor: color})}
             />
 
             <div className="flex justify-end">

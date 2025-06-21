@@ -1,6 +1,7 @@
 services:
   app:
     build: .
+    user: root
     container_name: next-app
     ports:
       - '3000:3000'
