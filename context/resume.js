@@ -306,7 +306,7 @@ export function ResumeProvider({children}) {
 
     const handleSkillsSubmit = () => {
         updateSkills(skillsList);
-        // router.push(`/dashboard/resume/download/${resume._id}`)
+        router.push(`/dashboard/resume/download/${resume._id}`)
     }
 
     const addSkill = () => {
