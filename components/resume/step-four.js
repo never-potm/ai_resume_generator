@@ -5,7 +5,7 @@ import {ArrowRight, Plus, X} from "lucide-react";
 import {useResume} from "@/context/resume";
 
 
-function StepFour(props) {
+function StepFour() {
 
     const {
         educationList,
@@ -28,6 +28,7 @@ function StepFour(props) {
                             value={education.name}
                             onChange={(e) => handleEducationChange(e, index)}
                             className="mb-3"
+                            autoFocus
                         />
                         <Input
                             name="address"

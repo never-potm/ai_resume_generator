@@ -273,12 +273,12 @@ export function ResumeProvider({children}) {
 
     React.useEffect(() => {
         if(resume.skills) {
-            setSkillsList()
+            setSkillsList(resume.skills);
         }
     }, [resume]);
 
     const updateSkills = async (skillsList) => {
-        const invalidSkills = skillsList.filter((skill) => !skill.name || !skill.label)
+        const invalidSkills = skillsList.filter((skill) => !skill.name || !skill.level)
         if(invalidSkills.length > 0) {
             toast.error("Please fill in both skill name and level");
             return;
