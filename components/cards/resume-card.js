@@ -2,6 +2,7 @@ import PersonalDetails from "@/components/preview/personal-detail";
 import Summary from "@/components/preview/summary";
 import Experience from "@/components/preview/experience";
 import Education from "@/components/preview/education";
+import Skills from "@/components/preview/skills";
 import Link from "next/link";
 
 export default function ResumeCard({resume}) {
@@ -20,6 +21,9 @@ export default function ResumeCard({resume}) {
                 </div>
                 <div className="line-clamp-3">
                     <Education resume={resume}/>
+                </div>
+                <div className="line-clamp-4">
+                    <Skills resume={resume}/>
                 </div>
             </div>
         </Link>

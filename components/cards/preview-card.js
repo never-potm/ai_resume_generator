@@ -2,6 +2,7 @@ import PersonalDetails from "@/components/preview/personal-detail";
 import Summary from "@/components/preview/summary";
 import Experience from "@/components/preview/experience";
 import Education from "@/components/preview/education";
+import Skills from "@/components/preview/skills";
 import {useResume} from "@/context/resume";
 
 export default function PreviewCard() {
@@ -15,6 +16,7 @@ export default function PreviewCard() {
             <Summary resume={resume}/>
             <Experience resume={resume}/>
             <Education resume={resume}/>
+            <Skills resume={resume}/>
         </div>
     )
 }
