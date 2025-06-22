@@ -6,6 +6,19 @@ import Education from "@/components/preview/education";
 import Experience from "@/components/preview/experience";
 import Skills from "@/components/preview/skills";
 
+export async function generateMetadata({params}) {
+    const resume = await getResumeFromDb(params._id);
+    return {
+        title: `${resume.name} - Resume`,
+        description: resume.summary,
+        openGraph: {
+            title: `${resume.name} - Resume`,
+            description: resume.summary,
+            images: ["/logo.svg"]
+        }
+    }
+}
+
 async function ResumePage({params}) {
 
     const resume = await getResumeFromDb(params._id);
