@@ -1,15 +1,36 @@
-import React from 'react';
+'use client';
+import React, {useEffect, useState} from 'react';
 import {Button} from "@/components/ui/button";
 import Image from "next/image";
+import {useResume} from "@/context/resume";
+import ResumeCard from "@/components/cards/resume-card";
+import {useParams} from "next/navigation";
 
 // https://cdn-icons-png.flaticon.com/128/1091/1091007.png
 // https://cdn-icons-png.flaticon.com/128/1497/1497542.png
 // https://cdn-icons-png.flaticon.com/128/1828/1828874.png
 
 function DownloadPage() {
+
+    const {retrievedResumes} = useResume();
+    const [currentResume, setCurrentResume] = useState(null);
+
+    const {_id} = useParams();
+
+    useEffect(() => {
+        console.log(retrievedResumes);
+        if(retrievedResumes?.length && _id) {
+            console.log(_id);
+            const resume = retrievedResumes.find(r => r._id === _id || null);
+
+            console.log(resume);
+            setCurrentResume(resume);
+        }
+    }, [retrievedResumes, _id]);
+
     return (
-        <div className="flex justify-center items-center h-screen">
-            <div>
+        <div className="flex justify-center items-center min-h-screen mx-5 my-20 overflow-auto">
+            <div className="text-center w-full md:w-1/3">
                 <h2 className="font-bold text-2xl">
                     Congratulations! Your AI powered resume is ready.
                 </h2>
@@ -37,6 +58,8 @@ function DownloadPage() {
                         <Button className="my-2">Share</Button>
                     </div>
                 </div>
+                {currentResume ? <ResumeCard resume={currentResume}/> : null}
+                <div className="mb-10"></div>
             </div>
         </div>
     );
