@@ -18,15 +18,24 @@ function DownloadPage() {
     const {_id} = useParams();
 
     useEffect(() => {
-        console.log(retrievedResumes);
         if(retrievedResumes?.length && _id) {
-            console.log(_id);
             const resume = retrievedResumes.find(r => r._id === _id || null);
-
-            console.log(resume);
             setCurrentResume(resume);
         }
     }, [retrievedResumes, _id]);
+
+    const primtResume = () => {
+        if(typeof window !== 'undefined') {
+            const newWindow = window.open(`/resume/${currentResume._id}`, "_blank");
+
+            // we set a timeout onload of the new window because sometimes it does not load immediately
+            newWindow.onload = () => {
+                setTimeout(() => {
+                    newWindow.print();
+                }, 300);
+            }
+        }
+    }
 
     return (
         <div className="flex justify-center items-center min-h-screen mx-5 my-20 overflow-auto">
@@ -41,14 +50,20 @@ function DownloadPage() {
                                alt="download"
                                width={50}
                                height={50}/>
-                        <Button className="my-2">Download</Button>
+                        <Button
+                            className="my-2"
+                            onClick={primtResume}
+                        >Download</Button>
                     </div>
                     <div className="flex flex-col items-center">
                         <Image src="https://cdn-icons-png.flaticon.com/128/1497/1497542.png"
                                alt="print"
                                width={50}
                                height={50}/>
-                        <Button className="my-2">Print</Button>
+                        <Button
+                            className="my-2"
+                            onClick={primtResume}
+                        >Print</Button>
                     </div>
                     <div className="flex flex-col items-center">
                         <Image src="https://cdn-icons-png.flaticon.com/128/1828/1828874.png"

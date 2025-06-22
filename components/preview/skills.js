@@ -2,7 +2,6 @@ import React from 'react';
 import {Star} from "lucide-react";
 
 function Skills({resume}) {
-    const skills = resume?.skills;
     const themeColor = resume?.themeColor || "#333";
     const defaultColor = "#d3d3d3";
     return (
