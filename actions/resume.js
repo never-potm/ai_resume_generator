@@ -119,4 +119,15 @@ export const updateSkillsToDb = async (data) => {
     }
 }
 
-
+export const deleteResumeFromDb = async (_id) => {
+    try {
+        await db();
+        await checkOwnership(_id);
+        const resume = await Resume.findByIdAndDelete(_id);
+        console.log(resume);
+        return JSON.parse(JSON.stringify(resume));
+    } catch (e) {
+        console.log(e);
+        throw new Error(e);
+    }
+}

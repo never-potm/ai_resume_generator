@@ -7,7 +7,8 @@ import {
     updateResumeFromDb,
     updateExperienceToDb,
     updateEducationToDb,
-    updateSkillsToDb
+    updateSkillsToDb,
+    deleteResumeFromDb,
 } from "@/actions/resume";
 import toast from 'react-hot-toast';
 import {useRouter, useParams, usePathname} from 'next/navigation';
@@ -327,6 +328,17 @@ export function ResumeProvider({children}) {
         updateSkills(newEntries);
     }
 
+    const deleteResume = async (_id) => {
+        try {
+            await deleteResumeFromDb(_id);
+            setResume(retrievedResumes.filter((resume) => resume._id !== _id));
+            toast.success("Resume deleted successfully.");
+        } catch (e) {
+            console.error(e);
+            toast.error("Failed to delete resume.");
+        }
+    }
+
     return <ResumeContext.Provider
         value={{
             step,
@@ -354,6 +366,7 @@ export function ResumeProvider({children}) {
             handleSkillsSubmit,
             addSkill,
             removeSkill,
+            deleteResume
         }}
     >
         {children}
