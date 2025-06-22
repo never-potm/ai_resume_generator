@@ -5,6 +5,7 @@ import Image from "next/image";
 import {useResume} from "@/context/resume";
 import ResumeCard from "@/components/cards/resume-card";
 import {useParams} from "next/navigation";
+import toast from "react-hot-toast";
 
 // https://cdn-icons-png.flaticon.com/128/1091/1091007.png
 // https://cdn-icons-png.flaticon.com/128/1497/1497542.png
@@ -70,7 +71,13 @@ function DownloadPage() {
                                alt="share"
                                width={50}
                                height={50}/>
-                        <Button className="my-2">Share</Button>
+                        <Button
+                            className="my-2"
+                            onClick={() => {
+                                navigator.clipboard.writeText(`${window.location.origin}/resume/${currentResume._id}`)
+                                toast.success("Link Copied to clipboard to share with anyone.")
+                            }}
+                        >Share</Button>
                     </div>
                 </div>
                 {currentResume ? <ResumeCard resume={currentResume}/> : null}
